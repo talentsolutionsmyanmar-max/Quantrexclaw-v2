@@ -1,0 +1,174 @@
+
+
+
+
+/**
+ * Core candlestick data structure
+ */
+export interface OHLCV {
+  time: number;
+  open: number;
+  high: number;
+  low: number;
+  close: number;
+  volume: number;
+}
+
+/**
+ * Liquidity sweep structure
+ */
+export interface Sweep {
+  price: number;
+  isHigh: boolean;
+  timeframe: string;
+  isSwept: boolean;
+  sweepTime?: number;
+}
+
+/**
+ * Specific type for OrderBlock and FVG directionality
+ */
+export type MarketDirection = 'bullish' | 'bearish';
+
+/**
+ * Order Block representation
+ */
+export interface OrderBlock {
+  id: string;
+  price: number;
+  type: MarketDirection;
+  timeframe: string;
+  isMitigated: boolean;
+}
+
+/**
+ * Fair Value Gap representation
+ */
+export interface FVG {
+  id: string;
+  high: number;
+  low: number;
+  type: MarketDirection;
+  timeframe: string;
+  isMitigated: boolean;
+}
+
+/**
+ * AI or Strategy Agent definition
+ */
+export interface Agent {
+  name: string;
+  weight: number;
+  confidence: number;
+  reasoning: string;
+}
+
+/**
+ * Signal Direction
+ */
+export type TradeDirection = 'long' | 'short';
+
+/**
+ * Signal Quality Grade
+ */
+export type SignalGrade = 'A+' | 'A' | 'B' | 'C';
+
+/**
+ * Generated Trade Signal
+ */
+export interface Signal {
+  id: string;
+  pair: string;
+  direction: TradeDirection;
+  entry: number;
+  stopLoss: number;
+  takeProfit: number;
+  rr: number; // Risk-to-Reward ratio
+  grade: SignalGrade;
+  agents: Agent[];
+  timestamp: number;
+}
+
+/**
+ * Trade execution state
+ */
+export type TradeStatus = 'open' | 'closed';
+
+/**
+ * Executed Trade record
+ */
+export interface Trade {
+  id: string;
+  signalId: string;
+  status: TradeStatus;
+  pnl?: number;
+  rMultiple?: number;
+}
+
+/**
+ * Trading session time window
+ */
+export interface Killzone {
+  name: string;
+  start: string; // Format: "HH:mm"
+  end: string;   // Format: "HH:mm"
+  isActive: boolean;
+}
+/**
+ * Agent scoring result
+ */
+export interface AgentScore {
+  agent: string;
+  score: number;
+  confidence: number;
+  reasoning: string;
+}
+
+/**
+ * Market structure point (BOS, CHoCH, MSS)
+ */
+export interface MarketStructure {
+  type: 'BOS' | 'CHoCH' | 'MSS';
+  direction: MarketDirection;
+  price: number;
+  time: number;
+  timeframe: string;
+}
+
+/**
+ * Premium/Discount array
+ */
+export interface PDArray {
+  price: number;
+  type: 'premium' | 'discount' | 'equilibrium';
+  strength: number; // 0-100
+  timeframe: string;
+}
+
+/**
+ * Backtest performance metrics
+ */
+export interface BacktestResult {
+  totalTrades: number;
+  winRate: number;
+  profitFactor: number;
+  sharpeRatio: number;
+  maxDrawdown: number;
+  netProfit: number;
+  avgRR: number;
+  killzonePerformance: Record<string, number>;
+}
+
+/**
+ * Liquidity level for sweep visualization
+ */
+export interface LiquidityLevel {
+  id: string;
+  price: number;
+  isHigh: boolean;
+  timeframe: string;
+  isSwept: boolean;
+  sweepTime?: number;
+  startBar: number;
+  lineStyle: 'solid' | 'dotted';
+}
