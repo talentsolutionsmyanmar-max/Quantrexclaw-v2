@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, ScrollView, Alert, StyleSheet } from 'react-native';
-
 export default function App() {
   const [command, setCommand] = useState('');
   const [mmtTime, setMmtTime] = useState('');
   const [inKillzone, setInKillzone] = useState(false);
-  const [analysis, setAnalysis] = useState(null);
-
   useEffect(() => {
     const timer = setInterval(() => {
       const now = new Date();
@@ -17,22 +14,17 @@ export default function App() {
     }, 1000);
     return () => clearInterval(timer);
   }, []);
-
   const handlePrep = () => {
     if (!inKillzone) return Alert.alert("NO TRADE", "Waiting for killzone");
     Alert.alert("✅ Data Pack", "Confluence 94 - GO Long SOLUSDT");
-    setAnalysis({confluence:94});
   };
-
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.title}>🚀 QuentrexClaw v3.5</Text>
-      <Text style={styles.mmt}>MMT: {mmtTime} {inKillzone ? '🔥 LIVE' : '⏳ WAIT'}</Text>
+      <Text style={styles.mmt}>MMT: {mmtTime} {inKillzone ? '🔥 KILLZONE LIVE' : '⏳ WAITING'}</Text>
       <TextInput style={styles.input} placeholder="QuentrexClaw prep SOLUSDT AKZ" value={command} onChangeText={setCommand} />
       <Button title="ROCK THE PREP" onPress={handlePrep} color="#00ff00" />
-      {analysis && <Button title="CONFIRM + EXECUTE REAL" onPress={() => Alert.alert("TRADE SENT", "Tiny size on MEXC")} color="#ff00ff" />}
     </ScrollView>
   );
 }
-
 const styles = StyleSheet.create({ container:{flex:1, padding:20, backgroundColor:'#000'}, title:{fontSize:28, color:'#00ff00', textAlign:'center'}, mmt:{fontSize:18, color:'#ffff00', textAlign:'center'}, input:{borderWidth:2, borderColor:'#00ff00', padding:15, margin:15, color:'#fff'} });
